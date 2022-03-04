@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SiteAtt.Console": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

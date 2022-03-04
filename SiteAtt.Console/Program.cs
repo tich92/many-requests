@@ -36,5 +36,4 @@ static IHostBuilder CreateHostBuilder(params string[] args) =>
         {
             logging.ClearProviders();
             logging.AddConsole();
-            logging.AddEventLog();
         });
