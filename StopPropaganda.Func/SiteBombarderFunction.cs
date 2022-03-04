@@ -1,4 +1,3 @@
-using System;
 using Core.Abstractions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
@@ -16,7 +15,7 @@ namespace StopPropaganda.Func
             _logger = loggerFactory.CreateLogger<SiteBombarderFunction>();
         }
 
-        [Function("SiteBombarderFunction")]
+        [Function("SiteBombarderFunction0")]
         public async Task Run([TimerTrigger("0 */1 * * * *", RunOnStartup = true)] MyInfo myTimer)
         {
             _logger.LogInformation($"Execution started: {DateTime.Now}");
@@ -25,21 +24,5 @@ namespace StopPropaganda.Func
 
             _logger.LogInformation($"Next timer schedule at: {myTimer.ScheduleStatus.Next}");
         }
-    }
-
-    public class MyInfo
-    {
-        public MyScheduleStatus ScheduleStatus { get; set; }
-
-        public bool IsPastDue { get; set; }
-    }
-
-    public class MyScheduleStatus
-    {
-        public DateTime Last { get; set; }
-
-        public DateTime Next { get; set; }
-
-        public DateTime LastUpdated { get; set; }
     }
 }
