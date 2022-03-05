@@ -21,7 +21,7 @@ public class SiteBombardService : ISiteBombardService
 
     public async Task BombardAsync(string siteUrl, ILogger logger)
     {
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
         
         var list = new List<Task>(IterationsCount);
 
