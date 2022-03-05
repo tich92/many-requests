@@ -9,7 +9,7 @@ namespace Core;
 
 public class SiteBombardService : ISiteBombardService
 {
-    private const int IterationsCount = 10000;
+    private const int IterationsCount = 1000;
     private readonly IHttpClientFactory _httpClientFactory;
 
     public SiteBombardService(IHttpClientFactory httpClientFactory)

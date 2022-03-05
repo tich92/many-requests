@@ -53,7 +53,8 @@ public class SiteRetriever : ISiteRetriever
         "https://uslugi27.ru", 
         "https://gosuslugi29.ru", 
         "https://gosuslugi.astrobl.ru",
-        "https://xn--90aivcdt6dxbc.xn--p1ai/"
+        "https://xn--90aivcdt6dxbc.xn--p1ai/",
+        "https://savelife.pw/"
     };
 
     public IEnumerable<string> GetSites()

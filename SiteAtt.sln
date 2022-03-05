@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteAtt.Console", "SiteAtt.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StopPropaganda.Func", "StopPropaganda.Func\StopPropaganda.Func.csproj", "{664E3423-ED8E-442D-906D-053C0FB4DB82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteAtt.List", "SiteAtt.List\SiteAtt.List.csproj", "{9C883FAD-3B3F-4C80-96DB-3CC04F3BDA0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteAtt.List.Contracts", "SiteAtt.List.Contracts\SiteAtt.List.Contracts.csproj", "{C4ACBBE4-03BA-4C1C-8778-ABAB870203C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{664E3423-ED8E-442D-906D-053C0FB4DB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{664E3423-ED8E-442D-906D-053C0FB4DB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{664E3423-ED8E-442D-906D-053C0FB4DB82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C883FAD-3B3F-4C80-96DB-3CC04F3BDA0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C883FAD-3B3F-4C80-96DB-3CC04F3BDA0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C883FAD-3B3F-4C80-96DB-3CC04F3BDA0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C883FAD-3B3F-4C80-96DB-3CC04F3BDA0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4ACBBE4-03BA-4C1C-8778-ABAB870203C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4ACBBE4-03BA-4C1C-8778-ABAB870203C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4ACBBE4-03BA-4C1C-8778-ABAB870203C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4ACBBE4-03BA-4C1C-8778-ABAB870203C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
