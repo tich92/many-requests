@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using Core.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,14 +11,15 @@ public static class ServiceCollectionExtensions
     {
         services.AddHttpClient();
         services.AddHttpClient("sites")
+            .ConfigureHttpClient(c => c.Timeout = TimeSpan.FromMinutes(2))
             .ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler
             {
                 AllowAutoRedirect = true,
-                AutomaticDecompression = System.Net.DecompressionMethods.GZip
+                AutomaticDecompression = System.Net.DecompressionMethods.GZip,
             });
 
-        services.AddSingleton<ISiteBombardService, SiteBombardService>();
-        services.AddSingleton<IBombardingExecutionService, BombardingExecutionService>();
+        services.AddScoped<ISiteBombardService, SiteBombardService>();
+        services.AddScoped<IBombardingExecutionService, BombardingExecutionService>();
         services.AddSingleton<ISiteRetriever, SiteRetriever>();
 
         return services;
