@@ -19,7 +19,7 @@ public class BombardingExecutionService : IBombardingExecutionService
     public async Task ExecuteAsync(ILogger logger)
     {
         logger.LogInformation("Executing process ...");
-        var sites = _siteRetriever.GetSites();
+        var sites = await _siteRetriever.GetSitesAsync();
 
         var tasks = sites.Select(x => _siteBombardService.BombardAsync(x, logger));
 

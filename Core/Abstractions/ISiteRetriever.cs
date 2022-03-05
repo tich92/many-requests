@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.Abstractions;
 
 public interface ISiteRetriever
 {
-    IEnumerable<string> GetSites();
+    Task<IEnumerable<string>> GetSitesAsync();
 }
