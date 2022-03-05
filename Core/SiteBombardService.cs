@@ -22,31 +22,18 @@ public class SiteBombardService : ISiteBombardService
     {
         var cancellationTokenSource = new CancellationTokenSource();
 
-        var list = new List<Func<CancellationToken, Task<bool>>>(IterationsCount);
+        var list = new List<Task>(IterationsCount);
 
         var client = _httpClientFactory.CreateClient("sites");
 
         for (var i = 0; i < IterationsCount; i++)
         {
-            list.Add(token => MakeRequestAsync(siteUrl, logger, client, token));
+            list.Add(MakeRequestAsync(siteUrl, logger, client, cancellationTokenSource.Token, () => cancellationTokenSource.Cancel()));
         }
 
-        await Parallel.ForEachAsync(list, cancellationTokenSource.Token, async (task, token) =>
-        {
-            if (cancellationTokenSource.IsCancellationRequested)
-            {
-                return;
-            }
-
-            var result = await task(token);
-
-            if (!result)
-            {
-                cancellationTokenSource.Cancel();
-            }
-        });
+        await Task.WhenAll(list);
     }
-    private static async Task<bool> MakeRequestAsync(string siteUrl, ILogger logger, HttpMessageInvoker client, CancellationToken cancellationToken)
+    private static async Task MakeRequestAsync(string siteUrl, ILogger logger, HttpMessageInvoker client, CancellationToken cancellationToken, Action cancelAction)
     {
         try
         {
@@ -61,15 +48,13 @@ public class SiteBombardService : ISiteBombardService
 
             if (!result.IsSuccessStatusCode)
             {
-                return false;
+                cancelAction.Invoke();
             }
         }
         catch (Exception e)
         {
             logger.LogError(e, $@"exception on: {siteUrl}. message: {e.Message}");
-            return false;
+            cancelAction.Invoke();
         }
-
-        return true;
     }
 }

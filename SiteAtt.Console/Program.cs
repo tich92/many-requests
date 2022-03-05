@@ -22,7 +22,7 @@ while (true)
     using (logger.BeginScope($"Started iteration: {counter}"))
     {
         await service.ExecuteAsync(logger);
-        await Task.Delay(TimeSpan.FromSeconds(30));
+        await Task.Delay(TimeSpan.FromMinutes(2));
     }
 }
 
