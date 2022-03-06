@@ -1,10 +1,14 @@
-﻿using Core;
+﻿using System.Net;
+using Core;
 using Core.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 var host = CreateHostBuilder().Build();
+
+ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+ServicePointManager.Expect100Continue = false;
 
 var serviceProvider = host.Services;
 
@@ -28,9 +32,7 @@ while (true)
         catch (Exception e)
         {
             Console.WriteLine(e);
-        }
-        
-        await Task.Delay(TimeSpan.FromMinutes(2));
+        }   
     }
 }
 
@@ -38,6 +40,12 @@ static IHostBuilder CreateHostBuilder(params string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureServices((_, services) =>
         {
+            services.AddLogging(loggerBuilder =>
+            {
+                loggerBuilder.ClearProviders();
+                loggerBuilder.AddConsole();
+            });
+            
             services.AddServices();
         })
         .ConfigureLogging((_, logging) =>

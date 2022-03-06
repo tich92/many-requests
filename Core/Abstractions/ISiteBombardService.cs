@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Core.Abstractions;
 
 public interface ISiteBombardService
 {
-    Task BombardAsync(string siteUrl, ILogger logger);
+    Task<bool> MakeRequestAsync(string siteUrl, HttpMessageInvoker client);
 }
