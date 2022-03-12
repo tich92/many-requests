@@ -16,7 +16,7 @@ namespace StopPropaganda.Func
         }
 
         [Function("SiteBombarderFunction0")]
-        public async Task Run([TimerTrigger("0 */1 * * * *", RunOnStartup = true)] MyInfo myTimer)
+        public async Task Run([TimerTrigger("0 */5 * * * *", RunOnStartup = true)] MyInfo myTimer)
         {
             _logger.LogInformation($"Execution started: {DateTime.Now}");
 
