@@ -35,7 +35,7 @@ public class BombardingExecutionService : IBombardingExecutionService
         logger.LogInformation("Process executed");
     }
 
-    private async Task<IEnumerable<Task>> GetSitesForBombardingAsync(IEnumerable<string> urls)
+    private ValueTask<IEnumerable<Task>> GetSitesForBombardingAsync(IEnumerable<string> urls)
     {
         var client = _httpClientFactory.CreateClient("sites");
         
@@ -47,7 +47,7 @@ public class BombardingExecutionService : IBombardingExecutionService
 
         if (_siteCollection.IsEmpty)
         {
-            return Enumerable.Empty<Task>();
+            return new ValueTask<IEnumerable<Task>>(Enumerable.Empty<Task>());
         }
         
         for (var i = 0; i < Constants.IterationsCount; i++)
@@ -55,7 +55,7 @@ public class BombardingExecutionService : IBombardingExecutionService
             bombardingTaskList.AddRange(_siteCollection.Select(site => site.Key).Select(url => MakeRequestAsync(url, client)));
         }
 
-        return bombardingTaskList;
+        return new ValueTask<IEnumerable<Task>>(bombardingTaskList);
     }
 
     private async Task MakeFirstShootAsync(string url, HttpMessageInvoker client)

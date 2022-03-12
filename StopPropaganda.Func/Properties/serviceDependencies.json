@@ -6,7 +6,7 @@
     },
     "storage1": {
       "type": "storage",
-      "connectionId": "AzureWebJobsStorage"
+      "connectionId": "blob-connect"
     }
   }
 }
