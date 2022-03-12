@@ -2,6 +2,6 @@
 {
     internal class Constants
     {
-        internal const int IterationsCount = 1000;
+        internal const int IterationsCount = 10000;
     }
 }
