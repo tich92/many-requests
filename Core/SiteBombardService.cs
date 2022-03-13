@@ -16,7 +16,7 @@ public class SiteBombardService : ISiteBombardService
         _logger = logger;
     }
 
-    public async Task<bool> MakeRequestAsync(string siteUrl, HttpMessageInvoker client)
+    public async Task<bool> MakeRequestAsync(string siteUrl, HttpMessageInvoker client, CancellationToken cancellationToken)
     {
         try
         {
@@ -32,7 +32,7 @@ public class SiteBombardService : ISiteBombardService
             request.Headers.TryAddWithoutValidation("sec-ch-ua-platform", "Windows");
             request.Headers.TryAddWithoutValidation("Upgrade-Insecure-Requests", "1");
 
-            var result = await client.SendAsync(request, CancellationToken.None);
+            var result = await client.SendAsync(request, cancellationToken);
 
             return result.IsSuccessStatusCode;
         }

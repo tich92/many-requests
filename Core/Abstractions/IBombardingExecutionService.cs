@@ -5,5 +5,5 @@ namespace Core.Abstractions;
 
 public interface IBombardingExecutionService
 {
-    Task ExecuteAsync(ILogger logger);
+    Task ExecuteAsync();
 }

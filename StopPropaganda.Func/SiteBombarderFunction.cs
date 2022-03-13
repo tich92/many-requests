@@ -20,7 +20,7 @@ namespace StopPropaganda.Func
         {
             _logger.LogInformation($"Execution started: {DateTime.Now}");
 
-            await _bombardingExecutionService.ExecuteAsync(_logger);
+            await _bombardingExecutionService.ExecuteAsync();
 
             _logger.LogInformation($"Next timer schedule at: {myTimer.ScheduleStatus.Next}");
         }

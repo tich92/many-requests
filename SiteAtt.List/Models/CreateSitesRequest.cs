@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SiteAtt.List.Models ;
+﻿namespace SiteAtt.List.Models ;
 
     public class CreateSitesRequest
     {

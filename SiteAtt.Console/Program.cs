@@ -27,7 +27,7 @@ while (true)
     {
         try
         {
-            await service.ExecuteAsync(logger);
+            await service.ExecuteAsync();
         }
         catch (Exception e)
         {
